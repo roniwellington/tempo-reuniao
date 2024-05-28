@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Agenda</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Tempo</th>
+                <th>Duração</th>
+                <th>Assunto</th>
+            </tr>
+        </thead>
+        <tbody id="agenda-body">
+            <tr>
+                <td>08:30</td>
+                <td>00:15:00</td>
+                <td>Recados</td>
+            </tr>
+            <tr>
+                <td>08:45</td>
+                <td>00:25:00</td>
+                <td>Propósito Vale, Safety & Behavior Share</td>
+            </tr>
+            <tr>
+                <td>09:10</td>
+                <td>00:10:00</td>
+                <td>Pendências da reunião anterior</td>
+            </tr>
+            <tr>
+                <td>09:20</td>
+                <td>00:15:00</td>
+                <td>OPEX</td>
+            </tr>
+            <tr>
+                <td>09:35</td>
+                <td>00:10:00</td>
+                <td>Pausa</td>
+            </tr>
+            <tr>
+                <td>09:45</td>
+                <td>00:30:00</td>
+                <td>Resumo Executivo</td>
+            </tr>
+            <tr>
+                <td>10:15</td>
+                <td>00:25:00</td>
+                <td>Plano de Ação</td>
+            </tr>
+            <tr>
+                <td>10:35</td>
+                <td>00:20:00</td>
+                <td>Painel de Indicadores</td>
+            </tr>
+            <tr>
+                <td>10:55</td>
+                <td>00:05:00</td>
+                <td>Painel AIP</td>
+            </tr>
+            <tr>
+                <td>11:00</td>
+                <td>00:10:00</td>
+                <td>Pauta VPS - Você sabia?</td>
+            </tr>
+            <tr>
+                <td>11:10</td>
+                <td>00:10:00</td>
+                <td>Dinâmica</td>
+            </tr>
+            <tr>
+                <td>11:15</td>
+                <td>00:05:00</td>
+                <td>Avaliação de Maturidade das Reuniões de Performance</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="buttons">
+        <button id="startButton">Play</button>
+        <button id="pauseButton" disabled>Pause</button>
+        <button id="nextButton" disabled>Próximo</button>
+    </div>
+    <div class="total-time">
+        Tempo total gasto na reunião: <span id="totalTime">00:00:00</span>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
