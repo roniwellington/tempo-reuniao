@@ -16,10 +16,11 @@ table {
     border-collapse: collapse;
     margin-top: 20px;
     border: 1px solid rgb(66, 66, 66);
+    border-radius: 55px;
 }
 
 th, td {
-    color: #696969;
+    color: #383838;
     padding: 10px;
     text-align: left;
     border: 1px solid rgb(122, 121, 121);
@@ -31,8 +32,8 @@ th {
 }
 
 tr.active {
-    background-color: rgb(252, 227, 0);
-    color: black;
+    background-color: #2977c0;
+    color: #ffffff;
 }
 
 tbody tr.completed {
@@ -48,7 +49,7 @@ tbody tr.completed {
 button {
     margin: 0 10px;
     padding: 10px 20px;
-    background-color: #3cb371;
+    background-color: #3190e9;
     color: white;
     border: none;
     cursor: pointer;
@@ -58,7 +59,7 @@ button {
 }
 
 button:hover {
-    background-color: #2e8b57;
+    background-color: #2977c0;
 }
 
 button:disabled {
@@ -149,7 +150,7 @@ button:disabled {
 .modal-content button {
     width: 100%;
     padding: 10px;
-    background-color: #3cb371;
+    background-color: #3190e9;
     color: white;
     border: none;
     cursor: pointer;
@@ -160,13 +161,13 @@ button:disabled {
 }
 
 .modal-content button:hover {
-    background-color: #2e8b57;
+    background-color: #2977c0;
 }
 
 .actions button {
     margin: 0 5px;
     padding: 5px 10px;
-    background-color: #3cb371;
+    background-color: #3190e9;
     color: white;
     border: none;
     cursor: pointer;
@@ -176,5 +177,5 @@ button:disabled {
 }
 
 .actions button:hover {
-    background-color: #2e8b57;
+    background-color: #2977c0;
 }

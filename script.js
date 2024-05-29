@@ -23,6 +23,7 @@ const saveButton = document.getElementById('saveButton');
 const timeInput = document.getElementById('time');
 const durationInput = document.getElementById('duration');
 const subjectInput = document.getElementById('subject');
+const dateInput = document.getElementById('date'); // Novo campo de data
 const modalTitle = document.getElementById('modalTitle');
 
 // Load state from localStorage
@@ -60,11 +61,13 @@ function renderAgenda() {
         const timeCell = document.createElement('td');
         const durationCell = document.createElement('td');
         const subjectCell = document.createElement('td');
+        const dateCell = document.createElement('td'); // Novo campo de data
         const actionsCell = document.createElement('td');
         
         timeCell.textContent = item.time;
         durationCell.textContent = formatDuration(item.duration);
         subjectCell.textContent = item.subject;
+        dateCell.textContent = item.date; // Novo campo de data
         
         // Add edit button
         const editButton = document.createElement('button');
@@ -77,6 +80,7 @@ function renderAgenda() {
         row.appendChild(timeCell);
         row.appendChild(durationCell);
         row.appendChild(subjectCell);
+        row.appendChild(dateCell); // Novo campo de data
         row.appendChild(actionsCell);
         agendaBody.appendChild(row);
     });
@@ -156,10 +160,10 @@ function pauseAgenda() {
 function addItem() {
     isEditing = false;
     modalTitle.textContent = 'Adicionar Item à Agenda';
-    
     timeInput.value = '';
     durationInput.value = '';
     subjectInput.value = '';
+    dateInput.value = ''; // Novo campo de data
     modal.style.display = "block";
 }
 
@@ -171,6 +175,7 @@ function editItem(index) {
     timeInput.value = item.time;
     durationInput.value = item.duration / 60; // Convert seconds to minutes
     subjectInput.value = item.subject;
+    dateInput.value = item.date; // Novo campo de data
     modal.style.display = "block";
 }
 
@@ -178,24 +183,31 @@ function saveItem() {
     const time = timeInput.value;
     const duration = parseInt(durationInput.value) * 60; // Convert minutes to seconds
     const subject = subjectInput.value;
+    const date = dateInput.value; // Novo campo de data
     
     if (isEditing) {
-        agenda[editingIndex] = { time, duration, subject };
+        agenda[editingIndex] = { time, duration, subject, date };
     } else {
-        agenda.push({ time, duration, subject });
+        agenda.push({ time, duration, subject, date });
     }
     
     renderAgenda();
     saveState();
     modal.style.display = "none";
+    
+    // Reativar botões caso a agenda tenha novos itens
+    startButton.disabled = false;
+    pauseButton.disabled = true;
+    nextButton.disabled = true;
+    pauseButton.textContent = "Pause";
 }
 
 function downloadCSV() {
     let csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "Tempo,Duração,Assunto\n"; // Header row
+    csvContent += "Tempo,Duração,Assunto,Data\n"; // Header row
     agenda.forEach(item => {
         const duration = formatDuration(item.duration);
-        const row = `${item.time},${duration},${item.subject}`;
+        const row = `${item.time},${duration},${item.subject},${item.date}`; // Novo campo de data
         csvContent += row + "\n";
     });
     const encodedUri = encodeURI(csvContent);
