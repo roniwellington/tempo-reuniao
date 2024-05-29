@@ -156,6 +156,7 @@ function pauseAgenda() {
 function addItem() {
     isEditing = false;
     modalTitle.textContent = 'Adicionar Item à Agenda';
+    
     timeInput.value = '';
     durationInput.value = '';
     subjectInput.value = '';

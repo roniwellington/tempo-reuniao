@@ -12,23 +12,26 @@ h1 {
 
 table {
     width: 100%;
+    color: #ffffff;
     border-collapse: collapse;
     margin-top: 20px;
-    border: 1px solid white;
+    border: 1px solid rgb(66, 66, 66);
 }
 
 th, td {
+    color: #696969;
     padding: 10px;
     text-align: left;
-    border: 1px solid white;
+    border: 1px solid rgb(122, 121, 121);
 }
 
 th {
-    background-color: #3cb371;
+    background-color: #6b6b6b;
+    color: #ffffff;
 }
 
 tr.active {
-    background-color: yellow;
+    background-color: rgb(252, 227, 0);
     color: black;
 }
 
