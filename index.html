@@ -14,6 +14,7 @@
                 <th>Tempo</th>
                 <th>Duração</th>
                 <th>Assunto</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody id="agenda-body">
@@ -33,11 +34,11 @@
         Tempo total gasto na reunião: <span id="totalTime">00:00:00</span>
     </div>
 
-    <!-- Modal for adding new item -->
+    <!-- Modal for adding/editing item -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Adicionar Item à Agenda</h2>
+            <h2 id="modalTitle">Adicionar Item à Agenda</h2>
             <label for="time">Tempo:</label>
             <input type="time" id="time" required><br>
             <label for="duration">Duração (minutos):</label>

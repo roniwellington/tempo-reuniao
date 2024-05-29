@@ -159,3 +159,19 @@ button:disabled {
 .modal-content button:hover {
     background-color: #2e8b57;
 }
+
+.actions button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #3cb371;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.actions button:hover {
+    background-color: #2e8b57;
+}

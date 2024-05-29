@@ -4,6 +4,8 @@ let timer;
 let totalTimeSpent = 0;
 let isPaused = false;
 let remainingTime;
+let isEditing = false;
+let editingIndex = null;
 
 const agendaBody = document.getElementById('agenda-body');
 const addButton = document.getElementById('addButton');
@@ -20,6 +22,7 @@ const saveButton = document.getElementById('saveButton');
 const timeInput = document.getElementById('time');
 const durationInput = document.getElementById('duration');
 const subjectInput = document.getElementById('subject');
+const modalTitle = document.getElementById('modalTitle');
 
 // Load state from localStorage
 const savedState = JSON.parse(localStorage.getItem('agendaState'));
@@ -56,12 +59,24 @@ function renderAgenda() {
         const timeCell = document.createElement('td');
         const durationCell = document.createElement('td');
         const subjectCell = document.createElement('td');
+        const actionsCell = document.createElement('td');
+        
         timeCell.textContent = item.time;
         durationCell.textContent = formatDuration(item.duration);
         subjectCell.textContent = item.subject;
+        
+        // Add edit button
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Editar';
+        editButton.onclick = () => editItem(index);
+
+        actionsCell.appendChild(editButton);
+        actionsCell.classList.add('actions');
+        
         row.appendChild(timeCell);
         row.appendChild(durationCell);
         row.appendChild(subjectCell);
+        row.appendChild(actionsCell);
         agendaBody.appendChild(row);
     });
 }
@@ -137,23 +152,49 @@ function pauseAgenda() {
     pauseButton.textContent = isPaused ? "Resume" : "Pause";
 }
 
-addButton.addEventListener('click', () => {
+function addItem() {
+    isEditing = false;
+    modalTitle.textContent = 'Adicionar Item à Agenda';
+    timeInput.value = '';
+    durationInput.value = '';
+    subjectInput.value = '';
     modal.style.display = "block";
-});
+}
+
+function editItem(index) {
+    isEditing = true;
+    editingIndex = index;
+    modalTitle.textContent = 'Editar Item da Agenda';
+    const item = agenda[index];
+    timeInput.value = item.time;
+    durationInput.value = item.duration / 60; // Convert seconds to minutes
+    subjectInput.value = item.subject;
+    modal.style.display = "block";
+}
+
+function saveItem() {
+    const time = timeInput.value;
+    const duration = parseInt(durationInput.value) * 60; // Convert minutes to seconds
+    const subject = subjectInput.value;
+    
+    if (isEditing) {
+        agenda[editingIndex] = { time, duration, subject };
+    } else {
+        agenda.push({ time, duration, subject });
+    }
+    
+    renderAgenda();
+    saveState();
+    modal.style.display = "none";
+}
+
+addButton.addEventListener('click', addItem);
 
 closeBtn.addEventListener('click', () => {
     modal.style.display = "none";
 });
 
-saveButton.addEventListener('click', () => {
-    const time = timeInput.value;
-    const duration = parseInt(durationInput.value) * 60;
-    const subject = subjectInput.value;
-    agenda.push({ time, duration, subject });
-    renderAgenda();
-    saveState();
-    modal.style.display = "none";
-});
+saveButton.addEventListener('click', saveItem);
 
 clearButton.addEventListener('click', () => {
     localStorage.removeItem('agendaState');
