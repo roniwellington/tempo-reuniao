@@ -14,6 +14,7 @@ const startButton = document.getElementById('startButton');
 const pauseButton = document.getElementById('pauseButton');
 const nextButton = document.getElementById('nextButton');
 const totalTimeElement = document.getElementById('totalTime');
+const downloadButton = document.getElementById('downloadButton');
 
 // Modal elements
 const modal = document.getElementById('modal');
@@ -188,6 +189,23 @@ function saveItem() {
     modal.style.display = "none";
 }
 
+function downloadCSV() {
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Tempo,Duração,Assunto\n"; // Header row
+    agenda.forEach(item => {
+        const duration = formatDuration(item.duration);
+        const row = `${item.time},${duration},${item.subject}`;
+        csvContent += row + "\n";
+    });
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "agenda.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 addButton.addEventListener('click', addItem);
 
 closeBtn.addEventListener('click', () => {
@@ -222,6 +240,10 @@ pauseButton.addEventListener('click', () => {
 
 nextButton.addEventListener('click', () => {
     nextAgenda();
+});
+
+downloadButton.addEventListener('click', () => {
+    downloadCSV();
 });
 
 window.addEventListener('beforeunload', saveState);
