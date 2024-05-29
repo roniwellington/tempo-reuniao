@@ -25,6 +25,35 @@ const pauseButton = document.getElementById('pauseButton');
 const nextButton = document.getElementById('nextButton');
 const totalTimeElement = document.getElementById('totalTime');
 
+// Load state from localStorage
+const savedState = JSON.parse(localStorage.getItem('agendaState'));
+if (savedState) {
+    currentIndex = savedState.currentIndex;
+    totalTimeSpent = savedState.totalTimeSpent;
+    agenda.forEach((item, index) => {
+        item.duration = savedState.agenda[index].duration;
+        if (index < currentIndex) {
+            document.getElementsByTagName('tbody')[0].getElementsByTagName('tr')[index].classList.add('completed');
+        }
+    });
+    updateTotalTime();
+    if (currentIndex < agenda.length) {
+        highlightRow(currentIndex);
+        updateDuration(currentIndex);
+        nextButton.disabled = false;
+        pauseButton.disabled = false;
+        startButton.disabled = true;
+    }
+}
+
+function saveState() {
+    localStorage.setItem('agendaState', JSON.stringify({
+        currentIndex,
+        totalTimeSpent,
+        agenda
+    }));
+}
+
 function highlightRow(index) {
     const rows = agendaBody.getElementsByTagName('tr');
     for (let i = 0; i < rows.length; i++) {
@@ -64,8 +93,10 @@ function startAgenda() {
                 totalTimeSpent++;
                 updateDuration(currentIndex);
                 updateTotalTime();
+                saveState();
                 if (remainingTime <= 0) {
                     clearInterval(timer);
+                    document.getElementsByTagName('tbody')[0].getElementsByTagName('tr')[currentIndex].classList.add('completed');
                     currentIndex++;
                     startAgenda();
                 }
@@ -83,6 +114,7 @@ function startAgenda() {
 function nextAgenda() {
     clearInterval(timer);
     totalTimeSpent += agenda[currentIndex].duration - remainingTime; // Add the remaining time of the current topic
+    document.getElementsByTagName('tbody')[0].getElementsByTagName('tr')[currentIndex].classList.add('completed');
     currentIndex++;
     startAgenda();
 }
@@ -104,3 +136,5 @@ pauseButton.addEventListener('click', () => {
 nextButton.addEventListener('click', () => {
     nextAgenda();
 });
+
+window.addEventListener('beforeunload', saveState);

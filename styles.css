@@ -32,6 +32,10 @@ tr.active {
     color: black;
 }
 
+tbody tr.completed {
+    text-decoration: line-through;
+}
+
 .buttons {
     display: flex;
     justify-content: center;
