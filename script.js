@@ -1,18 +1,4 @@
-const agenda = [
-    { time: "08:30", duration: 15 * 60, subject: "Recados" }, // duração em segundos
-    { time: "08:45", duration: 25 * 60, subject: "Propósito Vale, Safety & Behavior Share" },
-    { time: "09:10", duration: 10 * 60, subject: "Pendências da reunião anterior" },
-    { time: "09:20", duration: 15 * 60, subject: "OPEX" },
-    { time: "09:35", duration: 10 * 60, subject: "Pausa" },
-    { time: "09:45", duration: 30 * 60, subject: "Resumo Executivo" },
-    { time: "10:15", duration: 25 * 60, subject: "Plano de Ação" },
-    { time: "10:35", duration: 20 * 60, subject: "Painel de Indicadores" },
-    { time: "10:55", duration: 5 * 60, subject: "Painel AIP" },
-    { time: "11:00", duration: 10 * 60, subject: "Pauta VPS - Você sabia?" },
-    { time: "11:10", duration: 10 * 60, subject: "Dinâmica" },
-    { time: "11:15", duration: 5 * 60, subject: "Avaliação de Maturidade das Reuniões de Performance" }
-];
-
+let agenda = [];
 let currentIndex = 0;
 let timer;
 let totalTimeSpent = 0;
@@ -20,22 +6,28 @@ let isPaused = false;
 let remainingTime;
 
 const agendaBody = document.getElementById('agenda-body');
+const addButton = document.getElementById('addButton');
+const clearButton = document.getElementById('clearButton');
 const startButton = document.getElementById('startButton');
 const pauseButton = document.getElementById('pauseButton');
 const nextButton = document.getElementById('nextButton');
 const totalTimeElement = document.getElementById('totalTime');
+
+// Modal elements
+const modal = document.getElementById('modal');
+const closeBtn = document.getElementsByClassName('close')[0];
+const saveButton = document.getElementById('saveButton');
+const timeInput = document.getElementById('time');
+const durationInput = document.getElementById('duration');
+const subjectInput = document.getElementById('subject');
 
 // Load state from localStorage
 const savedState = JSON.parse(localStorage.getItem('agendaState'));
 if (savedState) {
     currentIndex = savedState.currentIndex;
     totalTimeSpent = savedState.totalTimeSpent;
-    agenda.forEach((item, index) => {
-        item.duration = savedState.agenda[index].duration;
-        if (index < currentIndex) {
-            document.getElementsByTagName('tbody')[0].getElementsByTagName('tr')[index].classList.add('completed');
-        }
-    });
+    agenda = savedState.agenda;
+    renderAgenda();
     updateTotalTime();
     if (currentIndex < agenda.length) {
         highlightRow(currentIndex);
@@ -54,6 +46,33 @@ function saveState() {
     }));
 }
 
+function renderAgenda() {
+    agendaBody.innerHTML = '';
+    agenda.forEach((item, index) => {
+        const row = document.createElement('tr');
+        if (index < currentIndex) {
+            row.classList.add('completed');
+        }
+        const timeCell = document.createElement('td');
+        const durationCell = document.createElement('td');
+        const subjectCell = document.createElement('td');
+        timeCell.textContent = item.time;
+        durationCell.textContent = formatDuration(item.duration);
+        subjectCell.textContent = item.subject;
+        row.appendChild(timeCell);
+        row.appendChild(durationCell);
+        row.appendChild(subjectCell);
+        agendaBody.appendChild(row);
+    });
+}
+
+function formatDuration(duration) {
+    const hours = Math.floor(duration / 3600);
+    const minutes = Math.floor((duration % 3600) / 60);
+    const seconds = duration % 60;
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
 function highlightRow(index) {
     const rows = agendaBody.getElementsByTagName('tr');
     for (let i = 0; i < rows.length; i++) {
@@ -68,17 +87,11 @@ function updateDuration(index) {
     const rows = agendaBody.getElementsByTagName('tr');
     const durationCell = rows[index].getElementsByTagName('td')[1];
     const duration = agenda[index].duration;
-    const hours = Math.floor(duration / 3600);
-    const minutes = Math.floor((duration % 3600) / 60);
-    const seconds = duration % 60;
-    durationCell.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    durationCell.textContent = formatDuration(duration);
 }
 
 function updateTotalTime() {
-    const hours = Math.floor(totalTimeSpent / 3600);
-    const minutes = Math.floor((totalTimeSpent % 3600) / 60);
-    const seconds = totalTimeSpent % 60;
-    totalTimeElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    totalTimeElement.textContent = formatDuration(totalTimeSpent);
 }
 
 function startAgenda() {
@@ -123,6 +136,39 @@ function pauseAgenda() {
     isPaused = !isPaused;
     pauseButton.textContent = isPaused ? "Resume" : "Pause";
 }
+
+addButton.addEventListener('click', () => {
+    modal.style.display = "block";
+});
+
+closeBtn.addEventListener('click', () => {
+    modal.style.display = "none";
+});
+
+saveButton.addEventListener('click', () => {
+    const time = timeInput.value;
+    const duration = parseInt(durationInput.value) * 60;
+    const subject = subjectInput.value;
+    agenda.push({ time, duration, subject });
+    renderAgenda();
+    saveState();
+    modal.style.display = "none";
+});
+
+clearButton.addEventListener('click', () => {
+    localStorage.removeItem('agendaState');
+    agenda = [];
+    currentIndex = 0;
+    totalTimeSpent = 0;
+    isPaused = false;
+    clearInterval(timer);
+    renderAgenda();
+    updateTotalTime();
+    startButton.disabled = false;
+    pauseButton.disabled = true;
+    nextButton.disabled = true;
+    pauseButton.textContent = "Pause";
+});
 
 startButton.addEventListener('click', () => {
     startButton.disabled = true;
