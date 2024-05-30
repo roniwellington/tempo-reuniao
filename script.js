@@ -15,6 +15,7 @@ const pauseButton = document.getElementById('pauseButton');
 const nextButton = document.getElementById('nextButton');
 const totalTimeElement = document.getElementById('totalTime');
 const downloadButton = document.getElementById('downloadButton');
+const audio = document.getElementById('audio'); // Elemento de áudio
 
 // Modal elements
 const modal = document.getElementById('modal');
@@ -115,6 +116,7 @@ function updateTotalTime() {
 }
 
 function startAgenda() {
+    playSound();
     if (currentIndex < agenda.length) {
         highlightRow(currentIndex);
         updateDuration(currentIndex);
@@ -145,6 +147,7 @@ function startAgenda() {
 }
 
 function nextAgenda() {
+    playSound();
     clearInterval(timer);
     totalTimeSpent += agenda[currentIndex].duration - remainingTime; // Add the remaining time of the current topic
     document.getElementsByTagName('tbody')[0].getElementsByTagName('tr')[currentIndex].classList.add('completed');
@@ -155,6 +158,7 @@ function nextAgenda() {
 function pauseAgenda() {
     isPaused = !isPaused;
     pauseButton.textContent = isPaused ? "Resume" : "Pause";
+    playSound();
 }
 
 function addItem() {
@@ -217,6 +221,11 @@ function downloadCSV() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+}
+
+function playSound() {
+    audio.currentTime = 0;
+    audio.play();
 }
 
 addButton.addEventListener('click', addItem);
