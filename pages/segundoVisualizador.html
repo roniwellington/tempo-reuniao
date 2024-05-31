@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador Genérico de Arquivos</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.4.0/pptxgen.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="../images/logo.png" alt="Logo" class="logo-img">
+        </div>
+        <nav class="menu">
+            <ul>
+                <li class="menu-item"><a href="../index.html" class="menu-link">Visualizador</a></li>
+                <li class="menu-item"><a href="#" class="menu-link">Agenda</a></li>
+                <li class="menu-item"><a href="#" class="menu-link">Editor de Código</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" id="menu-toggle">&#9776;</button>
+    </header>
+    <div class="description">
+        <img src="../images/jpg-pdf-banner.svg" alt="Descrição" class="description-img">
+        
+        <div>
+            <h1>Visualize e baixo seus arquivos</h1>
+            <p class="paragrafo">Esta aplicação permite visualizar diversos tipos de arquivos, incluindo Excel, PDFs, imagens, arquivos do Google Sheets, documentos de texto, e muito mais. Você pode carregar um arquivo para visualização, fazer zoom nas imagens, e baixar os arquivos nos formatos PDF, JPEG e PNG.</p>
+        </div>
+        
+    </div>
+    <div class="container">
+        <h1>Visualizador Genérico de Arquivos</h1>
+        <input type="file" id="file-input" />
+        <div id="viewer-container"></div>
+        <div id="download-buttons">
+            <button id="download-pdf">Baixar como PDF</button>
+            <button id="download-png">Baixar como PNG</button>
+            <button id="download-jpeg">Baixar como JPEG</button>
+        </div>
+    </div>
+    <footer class="footer">
+        <h4 class="nome">Desenvolvido por RoniWellington</h4>
+    </footer>
+    <script src="../scripts/visualizadorGenerico.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda</title>
+    <link rel="stylesheet" href="../styles/agenda.css">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <img src="../images/logo.png" alt="Logo" class="logo-img">
+        </div>
+        <nav class="menu">
+            <ul>
+                <li class="menu-item"><a href="../index.html" class="menu-link">Visualizador</a></li>
+                <li class="menu-item"><a href="agenda.html" class="menu-link">Agenda</a></li>
+                <li class="menu-item"><a href="#" class="menu-link">Editor de Código</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" id="menu-toggle">&#9776;</button>
+    </header>
+
+    <div class="description">
+        <img src="../images/agenda-300.png" alt="Descrição" class="description-img">
+        
+        <div>
+            <h1>Rotina do Dia</h1>
+            <p class="paragrafo"> Com o Gerenciador de Reuniões, você pode criar uma agenda personalizada, controlar o tempo de cada tópico abordado e garantir que sua reunião seja produtiva e pontual.</p>
+        </div>
+        
+    </div>
+
+    <h1>Agenda</h1>
+    <div class="description">
+    <table>
+        <thead>
+            <tr>
+                <th>Tempo</th>
+                <th>Duração</th>
+                <th>Assunto</th>
+                <th>Data</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="agenda-body">
+            <!-- Items will be dynamically added here -->
+        </tbody>
+    </table>
+</div>
+    <div class="buttons">
+        <button id="addButton">Adicionar Item</button>
+        <button id="clearButton">Limpar Agenda</button>
+        <button id="downloadButton">Baixar CSV</button>
+    </div>
+    <div class="buttons">
+        <button id="startButton">Play</button>
+        <button id="pauseButton" disabled>Pause</button>
+        <button id="nextButton" disabled>Próximo</button>
+    </div>
+    <div class="total-time">
+        Tempo total gasto na reunião: <span id="totalTime">00:00:00</span>
+    </div>
+
+    <!-- Modal for adding/editing item -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Adicionar Item à Agenda</h2>
+            <label for="time">Tempo:</label>
+            <input type="time" id="time" required><br>
+            <label for="duration">Duração (minutos):</label>
+            <input type="number" id="duration" required><br>
+            <label for="subject">Assunto:</label>
+            <input type="text" id="subject" required><br>
+            <label for="date">Data:</label>
+            <input type="date" id="date" required><br>
+            <button id="saveButton">Salvar</button>
+        </div>
+    </div>
+
+    <!-- Audio element for playing sound -->
+    <audio id="audio" src="../sound/inicio.mp3"></audio>
+
+    <footer class="footer">
+        <h4 class="nome">Desenvolvido por RoniWellington</h4>
+    </footer>
+
+    <script src="../scripts/agenda.js"></script>
+</body>
+</html>

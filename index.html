@@ -3,59 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Visualizador de Arquivos</title>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <h1>Agenda</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Tempo</th>
-                <th>Duração</th>
-                <th>Assunto</th>
-                <th>Data</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody id="agenda-body">
-            <!-- Items will be dynamically added here -->
-        </tbody>
-    </table>
-    <div class="buttons">
-        <button id="addButton">Adicionar Item</button>
-        <button id="clearButton">Limpar Agenda</button>
-        <button id="downloadButton">Baixar CSV</button>
-    </div>
-    <div class="buttons">
-        <button id="startButton">Play</button>
-        <button id="pauseButton" disabled>Pause</button>
-        <button id="nextButton" disabled>Próximo</button>
-    </div>
-    <div class="total-time">
-        Tempo total gasto na reunião: <span id="totalTime">00:00:00</span>
-    </div>
-
-    <!-- Modal for adding/editing item -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modalTitle">Adicionar Item à Agenda</h2>
-            <label for="time">Tempo:</label>
-            <input type="time" id="time" required><br>
-            <label for="duration">Duração (minutos):</label>
-            <input type="number" id="duration" required><br>
-            <label for="subject">Assunto:</label>
-            <input type="text" id="subject" required><br>
-            <label for="date">Data:</label>
-            <input type="date" id="date" required><br>
-            <button id="saveButton">Salvar</button>
+    <header class="header">
+        <div class="logo">
+            <img src="images/logo.png" alt="Logo" class="logo-img">
         </div>
+        <nav class="menu">
+            <ul>
+                <li class="menu-item"><a href="index.html" class="menu-link">Visualizador</a></li>
+                <li class="menu-item"><a href="pages/agenda.html" class="menu-link">Agenda</a></li>
+                <li class="menu-item"><a href="#" class="menu-link">Editor de Código</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" id="menu-toggle">&#9776;</button>
+    </header>
+    
+    <div class="description">
+        <img src="images/jpg-pdf-banner.svg" alt="Descrição" class="description-img">
+        
+        <div>
+            <h1>Visualize e baixo seus arquivos</h1>
+            <p class="paragrafo">Esta aplicação permite visualizar diversos tipos de arquivos, incluindo Excel, PDFs, imagens, arquivos do Google Sheets, documentos de texto, e muito mais. Você pode carregar um arquivo para visualização, fazer zoom nas imagens, e baixar os arquivos nos formatos PDF, JPEG e PNG.</p>
+        </div>
+        
     </div>
-
-    <!-- Audio element for playing sound -->
-    <audio id="audio" src="inicio.mp3"></audio>
-
-    <script src="script.js"></script>
+    <div class="container">
+        <h1>Visualizador de Arquivos</h1>
+        <input type="file" id="fileInput" />
+        <div id="downloadButtons">
+            <button id="downloadPdfBtn">Baixar como PDF</button>
+            <button id="downloadJpegBtn">Baixar como JPEG</button>
+            <button id="downloadPngBtn">Baixar como PNG</button>
+        </div>
+        <div class="tabs" id="sheetTabs"></div>
+        <div id="fileContent"></div>
+        <button id="zoomInBtn">Zoom In</button>
+        <button id="zoomOutBtn">Zoom Out</button>
+        <button id="backToTopBtn" onclick="scrollToTop()">&#8679;</button>
+    </div>
+    <div class="arquivo">
+        <a href="pages/segundoVisualizador.html" class="outraPagina">Seu Arquivo .csv ou .docx não abriu click aqui</a>
+    </div>
+   
+    <footer class="footer">
+        <h4 class="nome">Desenvolvido por RoniWellington</h4>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.5.207/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/papaparse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+    <script src="scripts/app.js"></script>
 </body>
 </html>
