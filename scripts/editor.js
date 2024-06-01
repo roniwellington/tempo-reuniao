@@ -1,35 +1,22 @@
 function addTitle() {
-    // let title = prompt("Digite o título:");
+    
         document.execCommand('formatBlock', false, 'h1');
         document.execCommand('insertText', false, title);
         document.execCommand('formatBlock', false, 'div');
-    // if (title) {
-    //     document.execCommand('formatBlock', false, 'h1');
-    //     document.execCommand('insertText', false, title);
-    //     document.execCommand('formatBlock', false, 'div'); // Reseta o formato para o próximo conteúdo ser div
-    // }
+    
 }
 
 function addSubtitle() {
     document.execCommand('formatBlock', false, 'h2');
     document.execCommand('insertText', false, subtitle);
     document.execCommand('formatBlock', false, 'div');
-    // let subtitle = prompt("Digite o subtítulo:");
-    // if (subtitle) {
-    //     document.execCommand('formatBlock', false, 'h2');
-    //     document.execCommand('insertText', false, subtitle);
-    //     document.execCommand('formatBlock', false, 'div'); // Reseta o formato para o próximo conteúdo ser div
-    // }
+   
 }
 
 function addParagraph() {
     document.execCommand('formatBlock', false, 'p');
     document.execCommand('insertText', false, paragraph);
-    // let paragraph = prompt("Digite o parágrafo:");
-    // if (paragraph) {
-    //     document.execCommand('formatBlock', false, 'p');
-    //     document.execCommand('insertText', false, paragraph);
-    // }
+    
 }
 
 function toggleBold() {
@@ -65,14 +52,35 @@ async function downloadPDF() {
     const doc = new jsPDF('p', 'mm', 'a4');
     const editor = document.getElementById('editor');
     
-    await html2canvas(editor, { scale: 2 }).then(canvas => {
+
+    // Create a temporary div to hold the cloned editor content
+    const tempDiv = document.createElement('div');
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.top = '-99999px';
+    tempDiv.style.width = '210mm'; // A4 width
+    tempDiv.style.padding = '20px'; // Add some padding if necessary
+    tempDiv.innerHTML = editor.innerHTML;
+    document.body.appendChild(tempDiv);
+
+    await html2canvas(tempDiv, { scale: 2 }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
         const imgWidth = 210; // A4 width in mm
         const imgHeight = canvas.height * imgWidth / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0
         
-        doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        // Add the image to the PDF and handle multi-page content
+        while (heightLeft > 0) {
+            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= 297;
+            position -= 297;
+            if (heightLeft > 0) {
+                doc.addPage();
+            }
+        }
         doc.save('documento.pdf');
     });
+    document.body.removeChild(tempDiv); // Clean up the temporary div
 }
 function downloadPNG() {
     html2canvas(document.getElementById('editor')).then(canvas => {
