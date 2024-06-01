@@ -1,0 +1,97 @@
+.pagina {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+    flex-direction: column;
+}
+
+.container {
+    width: 80%;
+    max-width: 900px;
+    margin: 20px auto;
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.intro {
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.intro h1 {
+    font-size: 2em;
+    margin: 0;
+    color: #333;
+}
+
+.intro p {
+    font-size: 1.1em;
+    color: #666;
+}
+
+.editor-container {
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.toolbar {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.toolbar button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-right: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.toolbar button:hover {
+    background-color: #0056b3;
+}
+
+#editor {
+    border: 1px solid #ccc;
+    padding: 10px;
+    min-height: 300px;
+    overflow-y: auto;
+    border-radius: 4px;
+    text-align: left;
+    flex: 1;
+}
+
+.download-buttons {
+    margin-top: 20px;
+}
+
+.download-buttons button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.download-buttons button:hover {
+    background-color: #218838;
+}
+

@@ -176,13 +176,27 @@ function renderPPTX(file, container) {
 
 function convertToPDF(container) {
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF();
-    html2canvas(container).then(canvas => {
+    const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'pt',
+        format: 'a4'
+    });
+
+    html2canvas(container, {
+        scale: 3
+    }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
         const imgProps = pdf.getImageProperties(imgData);
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        
+        const margin = 20;
+        const leftMargin = margin;
+        const topMargin = margin;
+        const imgWidth = pdfWidth - leftMargin * 2;
+        const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+        pdf.addImage(imgData, 'PNG', leftMargin, topMargin, imgWidth, imgHeight);
         pdf.save('arquivo.pdf');
     });
 }

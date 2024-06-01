@@ -152,6 +152,10 @@ h1 {
 #fileContent {
     overflow: auto;
     max-height: 70vh;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #fileContent img {
@@ -161,7 +165,7 @@ h1 {
     margin: auto;
 }
 
-button#zoomInBtn, button#zoomOutBtn, button#backToTopBtn {
+.botao, button#zoomInBtn, button#zoomOutBtn, button#backToTopBtn {
     padding: 10px 20px;
     margin: 10px;
     border: none;
@@ -195,10 +199,27 @@ button#backToTopBtn {
     display: inline-block;
 }
 
-.footer {
+footer {
+    text-align: center;
     margin-top: 20px;
-    background-color: #6b6b6b;
-    padding: 20px;
+    padding: 10px 0;
+    background-color: #333;
+    color: #fff;
+    border-radius: 4px;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }
 
 .nome {

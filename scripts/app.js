@@ -180,34 +180,45 @@ function displayCSVData(data) {
 function downloadAsPDF() {
     const fileContent = document.getElementById('fileContent');
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+    const doc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+    });
 
-    html2canvas(fileContent).then(canvas => {
+    html2canvas(fileContent, {
+        scale: 3, // Aumenta a escala para melhorar a qualidade
+        useCORS: true
+    }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
-        const imgWidth = 210;
-        const pageHeight = 295;
-        const imgHeight = canvas.height * imgWidth / canvas.width;
+        const imgWidth = 190; // Ajuste para considerar as margens
+        const pageHeight = 277; // Altura da página A4 menos as margens
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
         let heightLeft = imgHeight;
-        let position = 0;
+        let position = 10; // Margem superior
 
-        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight); // Margens laterais de 10mm
         heightLeft -= pageHeight;
 
         while (heightLeft >= 0) {
-            position = heightLeft - imgHeight;
+            position = heightLeft - imgHeight + 10; // Margem superior para páginas seguintes
             doc.addPage();
-            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
             heightLeft -= pageHeight;
         }
         doc.save('download.pdf');
     });
 }
 
+
 function downloadAsJPEG() {
     const fileContent = document.getElementById('fileContent');
 
-    html2canvas(fileContent).then(canvas => {
-        const imgData = canvas.toDataURL('image/jpeg');
+    html2canvas(fileContent, {
+        scale: 3, // Aumenta a escala para melhorar a qualidade
+        useCORS: true
+    }).then(canvas => {
+        const imgData = canvas.toDataURL('image/jpeg', 1.0); // Qualidade máxima
         const a = document.createElement('a');
         a.href = imgData;
         a.download = 'download.jpeg';
@@ -220,7 +231,10 @@ function downloadAsJPEG() {
 function downloadAsPNG() {
     const fileContent = document.getElementById('fileContent');
 
-    html2canvas(fileContent).then(canvas => {
+    html2canvas(fileContent, {
+        scale: 3, // Aumenta a escala para melhorar a qualidade
+        useCORS: true
+    }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
         const a = document.createElement('a');
         a.href = imgData;
@@ -230,6 +244,7 @@ function downloadAsPNG() {
         document.body.removeChild(a);
     });
 }
+
 
 function scrollToTop() {
     document.documentElement.scrollTop = 0;
